@@ -2,27 +2,26 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useAppTheme } from '../theme';
+import { CMUFooter } from '../components/CMUFooter';
 
 export const SplashScreen = () => {
   const navigation = useNavigation<any>();
+  const theme = useAppTheme();
 
   useEffect(() => {
-    // Simulate loading
-    const timer = setTimeout(() => {
+    setTimeout(() => {
       navigation.replace('DeviceManager');
-    }, 2500);
-    return () => clearTimeout(timer);
+    }, 2000);
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <View style={styles.content}>
-        <Text style={styles.title}>SeaFeeder CMU</Text>
-        <Text style={styles.subtitle}>Automated Feed Control</Text>
+        <Text style={[styles.title, { color: theme.colors.primary }]}>SeaFeeder CMU</Text>
+        <Text style={[styles.subtitle, { color: theme.colors.textSecondary }]}>Automated Marine Feeding Control</Text>
       </View>
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>Developed by CMU final year students</Text>
-      </View>
+      <CMUFooter />
     </SafeAreaView>
   );
 };
@@ -30,7 +29,6 @@ export const SplashScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0f172a', // Dark Navy
     justifyContent: 'space-between',
     alignItems: 'center',
   },
@@ -42,22 +40,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 42,
     fontWeight: 'bold',
-    color: '#38bdf8', // Light Blue
     marginBottom: 10,
-    letterSpacing: 1,
+    letterSpacing: 2,
   },
   subtitle: {
-    fontSize: 18,
-    color: '#94a3b8',
-    letterSpacing: 0.5,
-  },
-  footer: {
-    padding: 20,
-    marginBottom: 20,
-  },
-  footerText: {
-    color: '#64748b',
-    fontSize: 14,
-    fontWeight: '500',
+    fontSize: 16,
+    textTransform: 'uppercase',
+    letterSpacing: 3,
   },
 });

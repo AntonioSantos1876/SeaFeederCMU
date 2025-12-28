@@ -17,6 +17,7 @@ export interface CalculationInput {
   temperatureC?: number; // Optional temp modifier
   customRatePct?: number; // User override
   calibrationFlowRate?: number; // Grams per second
+  batteryVoltage?: number; // Volts for Low Power Mode
 }
 
 /**
@@ -65,18 +66,28 @@ export const calculateFeedingPlan = (input: CalculationInput): FeedingPlan => {
 
   // 4. Calculate Totals
   const biomassG = fishCount * avgWeightG;
-  const totalDailyRationG = biomassG * (useRate / 100);
+  let totalDailyRationG = biomassG * (useRate / 100);
 
   // 5. Frequency & Schedule (Safe Zones)
   // Default Safe Zones: 8:30, 12:00, 15:30, 17:30. Stop after 18:30.
   const allSafeTimes = ['08:30', '12:00', '15:30', '17:30'];
   let freq = stageData.freq;
   
-  // Cap freq at available safe slots for now (or double up if needed, but keeping simple)
-  if (freq > 4) freq = 4; // Max 4 safe zones defined for now
+  // Power Awareness: Low Battery (< 11.5V) -> Remove last meal
+  if (input.batteryVoltage !== undefined && input.batteryVoltage < 11.5) {
+     freq = Math.max(1, freq - 1);
+     warnings.push("Low Battery (<11.5V): Evening feed cancelled to save power.");
+  }
+  
+  // Cap freq at available safe slots for now
+  if (freq > 4) freq = 4; // Max 4 safe zones defined for work
   
   const schedule = allSafeTimes.slice(0, freq);
   const gramsPerCycle = totalDailyRationG / freq;
+
+  // Recalculate total based on actual cycles (if we dropped one, total should probably reflect that, or distributed? 
+  // Master prompt says "Reduce feeding frequency", usually implying less food too to save power/motor time).
+  totalDailyRationG = gramsPerCycle * freq;
 
   return {
     totalDailyRationG,

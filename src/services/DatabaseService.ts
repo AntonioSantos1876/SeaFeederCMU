@@ -53,6 +53,19 @@ export const initDatabase = async () => {
         status TEXT DEFAULT 'PENDING' -- 'PENDING', 'SENT', 'FAILED'
       );
     `);
+
+    // Migration for Master Build Upgrade
+    // Try adding columns if they don't exist (SQLite doesn't support IF NOT EXISTS for columns easily in one go)
+    // We catch errors if columns already exist.
+    const columns = ['stocking_date TEXT', 'cage_dimensions TEXT', 'battery_voltage REAL'];
+    for (const col of columns) {
+      try {
+        await db.execAsync(`ALTER TABLE devices ADD COLUMN ${col};`);
+      } catch (e) {
+        // Column likely exists, ignore
+      }
+    }
+    
     console.log('Database initialized successfully');
   } catch (error) {
     console.error('Failed to initialize database', error);
@@ -62,17 +75,7 @@ export const initDatabase = async () => {
 export const getDB = () => db;
 
 // Basic typed helpers
-export interface Device {
-  id: string;
-  name: string;
-  cage_diameter: number;
-  cage_depth: number;
-  species: string;
-  fish_count: number;
-  fish_age: number;
-  last_seen: string;
-  connection_status: 'OFFLINE' | 'LOCAL' | 'REMOTE';
-}
+import { Device } from '../types/DeviceContract';
 
 export const Devices = {
   getAll: async (): Promise<Device[]> => {
@@ -80,8 +83,8 @@ export const Devices = {
   },
   add: async (device: Device) => {
     return await db.runAsync(
-      `INSERT OR REPLACE INTO devices (id, name, cage_diameter, cage_depth, species, fish_count, fish_age, last_seen, connection_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [device.id, device.name, device.cage_diameter, device.cage_depth, device.species, device.fish_count, device.fish_age, device.last_seen, device.connection_status]
+      `INSERT OR REPLACE INTO devices (id, name, cage_diameter, cage_depth, species, fish_count, fish_age, last_seen, connection_status, stocking_date, cage_dimensions, battery_voltage) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [device.id, device.name, device.cage_diameter, device.cage_depth, device.species, device.fish_count, device.fish_age, device.last_seen, device.connection_status, device.stocking_date || null, device.cage_dimensions || null, device.battery_voltage || null]
     );
   }
 };

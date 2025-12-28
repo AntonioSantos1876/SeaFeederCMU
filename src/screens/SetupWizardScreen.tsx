@@ -21,6 +21,7 @@ export const SetupWizardScreen = () => {
   const [species, setSpecies] = useState('Tilapia');
   const [count, setCount] = useState('');
   const [avgWeight, setAvgWeight] = useState('');
+  const [stockingDate, setStockingDate] = useState(new Date().toISOString().split('T')[0]); // Default Today
   const [protein, setProtein] = useState('');
   const [calibWeight, setCalibWeight] = useState('');
   const [flowRate, setFlowRate] = useState(10);
@@ -76,11 +77,19 @@ export const SetupWizardScreen = () => {
               <ScrollView contentContainerStyle={{padding: 20}}>
                   <Text style={{color: theme.colors.text, fontSize: 20, marginBottom: 10}}>Configuration</Text>
                   
-                  {step === 2 && (
+                   {step === 2 && (
                     <GlassCard style={{padding: 10}}>
+                       <Text style={{color: theme.colors.textSecondary, marginBottom: 5, fontSize: 12, textTransform: 'uppercase'}}>Species Selection</Text>
+                       <View style={{flexDirection: 'row', flexWrap: 'wrap', marginBottom: 15, gap: 8}}>
+                          <Button mode={species === 'Tilapia' ? 'contained' : 'outlined'} onPress={() => setSpecies('Tilapia')} contentStyle={{height: 36}} labelStyle={{fontSize: 12}} theme={{colors: {primary: theme.colors.primary}}}>Tilapia</Button>
+                          <Button mode="outlined" onPress={() => Alert.alert('Coming Soon', 'Basa support is under development.')} contentStyle={{height: 36}} labelStyle={{fontSize: 12, color: theme.colors.textSecondary}} style={{borderColor: theme.colors.border}}>Basa 🔒</Button>
+                          <Button mode="outlined" onPress={() => Alert.alert('Coming Soon', 'Shrimp support is under development.')} contentStyle={{height: 36}} labelStyle={{fontSize: 12, color: theme.colors.textSecondary}} style={{borderColor: theme.colors.border}}>Shrimp 🔒</Button>
+                       </View>
+
                        <TextInput label="Name" value={name} onChangeText={setName} style={{backgroundColor: 'transparent'}} textColor={theme.colors.text} />
                        <TextInput label="Count" value={count} onChangeText={setCount} keyboardType="numeric" style={{backgroundColor: 'transparent'}} textColor={theme.colors.text} />
-                       <TextInput label="Weight" value={avgWeight} onChangeText={setAvgWeight} keyboardType="numeric" style={{backgroundColor: 'transparent'}} textColor={theme.colors.text} />
+                       <TextInput label="Avg Weight (g)" value={avgWeight} onChangeText={setAvgWeight} keyboardType="numeric" style={{backgroundColor: 'transparent'}} textColor={theme.colors.text} />
+                       <TextInput label="Stocking Date (YYYY-MM-DD)" value={stockingDate} onChangeText={setStockingDate} style={{backgroundColor: 'transparent'}} textColor={theme.colors.text} />
                        <Button mode="contained" onPress={() => setStep(3)} style={{marginTop: 20}}>Next</Button>
                     </GlassCard>
                   )}
@@ -96,7 +105,22 @@ export const SetupWizardScreen = () => {
                     <GlassCard style={{padding: 20}}>
                         <Text style={{color: theme.colors.text, fontSize: 18}}>Plan Generated</Text>
                         <Text style={{color: theme.colors.text}}>{plan?.totalDailyRationG.toFixed(0)}g Daily</Text>
-                        <Button mode="contained" onPress={() => navigation.navigate('Dashboard', { deviceId })} style={{marginTop: 20}}>Save</Button>
+                        <Button mode="contained" onPress={async () => {
+                          await Devices.add({
+                            id: deviceId,
+                            name,
+                            species,
+                            fish_count: parseInt(count),
+                            fish_age: parseFloat(avgWeight),
+                            cage_diameter: 10,
+                            cage_depth: 8,
+                            stocking_date: stockingDate,
+                            last_seen: new Date().toISOString(),
+                            connection_status: 'LOCAL',
+                            battery_voltage: 12.4
+                          });
+                          navigation.navigate('Dashboard', { deviceId });
+                        }} style={{marginTop: 20}}>Save & Finish</Button>
                     </GlassCard>
                   )}
               </ScrollView>

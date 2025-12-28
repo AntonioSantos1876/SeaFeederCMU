@@ -4,8 +4,10 @@ import { Text, Button, ProgressBar, Avatar, IconButton } from 'react-native-pape
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { BlurView } from 'expo-blur';
-import { Devices, Device } from '../services/DatabaseService';
+import { Devices } from '../services/DatabaseService';
+import { Device } from '../types/DeviceContract';
 import { useAppTheme } from '../theme';
+import { CMUFooter } from '../components/CMUFooter';
 
 /**
  * Main Dashboard Screen
@@ -60,19 +62,34 @@ export const DashboardScreen = () => {
            </View>
         </GlassTile>
 
-        {/* Grid */}
+        {/* Expanded Telemetry */}
         <View style={styles.row}>
            <GlassTile style={{ flex: 1, marginRight: 8 }}>
-              <Text style={styles.label}>Hopper</Text>
-              <Text style={[styles.mediumValue, { color: theme.colors.warning }]}>42%</Text>
-              <ProgressBar progress={0.42} color={theme.colors.warning} style={styles.bar} />
+              <Text style={styles.label}>Voltage</Text>
+              <Text style={[styles.mediumValue, { color: device.battery_voltage && device.battery_voltage < 11.5 ? theme.colors.error : theme.colors.success }]}>
+                {device.battery_voltage ? `${device.battery_voltage}V` : '12.4V'}
+              </Text>
+              <Text style={{ fontSize: 10, color: theme.colors.textSecondary }}>
+                 {device.battery_voltage && device.battery_voltage < 11.5 ? 'LOW POWER MODE' : 'Nominal'}
+              </Text>
            </GlassTile>
-           <GlassTile style={{ flex: 1}}>
-              <Text style={styles.label}>Battery</Text>
-              <Text style={[styles.mediumValue, { color: theme.colors.success }]}>94%</Text>
-              <ProgressBar progress={0.94} color={theme.colors.success} style={styles.bar} />
+           <GlassTile style={{ flex: 1 }}>
+              <Text style={styles.label}>Lifetime Feed</Text>
+              <Text style={styles.mediumValue}>124kg</Text>
+              <Text style={{ fontSize: 10, color: theme.colors.textSecondary }}>Total Dispensed</Text>
            </GlassTile>
         </View>
+
+        {/* Schedule List */}
+        <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Feeding Schedule (Next 10)</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 20 }}>
+          {[...Array(10)].map((_, i) => (
+             <GlassTile key={i} style={{ width: 100, marginRight: 10, height: 80, justifyContent: 'center', alignItems: 'center' }}>
+                <Text style={{ color: theme.colors.text, fontWeight: 'bold' }}>{0o30 + (i*3)}:00</Text>
+                <Text style={{ color: theme.colors.secondary }}>200g</Text>
+             </GlassTile>
+          ))}
+        </ScrollView>
 
         {/* Quick Actions */}
         <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>Controls</Text>
@@ -89,6 +106,8 @@ export const DashboardScreen = () => {
               <Text style={{ color: theme.colors.text, fontSize: 10 }}>Stop</Text>
            </TouchableOpacity>
         </View>
+
+        <CMUFooter />
 
       </ScrollView>
 

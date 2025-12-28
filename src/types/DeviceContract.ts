@@ -1,6 +1,20 @@
 export type ConnectionType = 'BLE' | 'WIFI_AP' | 'CLOUD';
 export type ConnectionStatus = 'CONNECTED' | 'DISCONNECTED' | 'CONNECTING';
 
+export interface Device {
+  id: string;
+  name: string;
+  species: string;
+  fish_count: number;
+  fish_age: number; // avg weight in grams
+  cage_diameter: number;
+  cage_depth: number;
+  stocking_date?: string; // ISO Date String
+  cage_dimensions?: string; // JSON string for {diameter, depth} redundant but requested as TEXT
+  last_seen: string;
+  connection_status: 'LOCAL' | 'CLOUD';
+  battery_voltage?: number; // Volts
+}
 export interface DeviceState {
   batteryLevel: number;
   isCharging: boolean;
