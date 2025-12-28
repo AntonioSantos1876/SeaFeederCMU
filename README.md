@@ -51,6 +51,8 @@ Scan the QR code with your phone to launch the app!
 
 ## Developers
 - **Antonio Santos** - Lead Developer
+- **Safiya Burgess** - Developer
+- **Alexander Warren** - Developer
 - **CMU Team** - Research & Design
 
 ---
