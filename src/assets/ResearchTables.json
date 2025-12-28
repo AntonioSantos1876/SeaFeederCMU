@@ -1,0 +1,28 @@
+{
+  "tilapia": {
+    "stages": [
+      { "name": "Fry", "min_weight_g": 0, "max_weight_g": 1, "daily_rate_pct": 15, "freq": 8, "pellet_mm": "0.5 - 1.0" },
+      { "name": "Fingerling", "min_weight_g": 1, "max_weight_g": 50, "daily_rate_pct": 6, "freq": 4, "pellet_mm": "1.5 - 2.0" },
+      { "name": "Juvenile", "min_weight_g": 50, "max_weight_g": 250, "daily_rate_pct": 3.5, "freq": 3, "pellet_mm": "3.0" },
+      { "name": "Adult", "min_weight_g": 250, "max_weight_g": 10000, "daily_rate_pct": 1.75, "freq": 2, "pellet_mm": "4.0 - 6.0" }
+    ]
+  },
+  "basa": {
+    "stages": [
+      { "name": "Fingerling", "min_weight_g": 0, "max_weight_g": 20, "daily_rate_pct": 5, "freq": 4, "pellet_mm": "1.5" },
+      { "name": "Juvenile", "min_weight_g": 20, "max_weight_g": 150, "daily_rate_pct": 3, "freq": 3, "pellet_mm": "3.0" },
+      { "name": "Adult", "min_weight_g": 150, "max_weight_g": 10000, "daily_rate_pct": 1.5, "freq": 2, "pellet_mm": "5.0 - 8.0" }
+    ]
+  },
+  "shrimp": {
+    "stages": [
+      { "name": "Post-Larvae", "min_weight_g": 0, "max_weight_g": 2, "daily_rate_pct": 10, "freq": 5, "pellet_mm": "Crumbles" },
+      { "name": "Grow-out", "min_weight_g": 2, "max_weight_g": 1000, "daily_rate_pct": 3, "freq": 3, "pellet_mm": "Sinking Pellets" }
+    ]
+  },
+  "ornamental": {
+    "stages": [
+      { "name": "General", "min_weight_g": 0, "max_weight_g": 1000, "daily_rate_pct": 2, "freq": 2, "pellet_mm": "Flakes/Small" }
+    ]
+  }
+}
