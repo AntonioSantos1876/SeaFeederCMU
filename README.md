@@ -1,6 +1,6 @@
-# SeaFeeder CMU 🐟
+# SeaFeeder CMU 
 
-Welcome to **SeaFeeder CMU**, a final year project developed by Computer Science students at CMU. This application is designed to modernize aquaculture by providing an intelligent, automated feeding system for fish farms.
+Welcome to **SeaFeeder CMU**, a final year project developed by Mechatronics Engineering students at The Caribbean Maritime University (CMU). This application is designed to modernize aquaculture by providing an intelligent, automated feeding system for fish farms.
 
 ## What it does
 SeaFeeder connects to automated feedhoppers attached to sea cages. It allows farm operators to:
