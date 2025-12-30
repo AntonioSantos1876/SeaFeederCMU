@@ -1,12 +1,10 @@
 # SeaFeeder CMU - Smart Aquaculture Feeding System
 
-![SeaFeeder Banner](https://via.placeholder.com/1200x300?text=SeaFeeder+CMU)
-
 Welcome to **SeaFeeder CMU**, a final year project developed by Mechatronics Engineering students at The Caribbean Maritime University (CMU). This application is designed to modernize aquaculture by providing an intelligent, automated feeding system for fish farms.
 
 **SeaFeeder CMU** is a state-of-the-art mobile application designed to control and monitor intelligent autonomous fish feeders. Developed as a final year engineering project, it leverages Bluetooth Low Energy (BLE) and an offline-first architecture to operate reliably in open ocean environments.
 
-## 🚀 Features
+## Features
 
 -   **Dashboard Telemetry**: Real-time monitoring of battery voltage, hopper levels, and next scheduled feed.
 -   **Smart Feeding Algorithms**: Automatically calculates optimal feed rations based on species, fish weight, and water temperature.
@@ -16,7 +14,7 @@ Welcome to **SeaFeeder CMU**, a final year project developed by Mechatronics Eng
 -   **Tablet Optimized**: Layout adapts for landscape orientation on tablets for field use.
 -   **Dynamic Theming**: Support for Light and Dark modes with a custom "Glassmorphism" UI aesthetic.
 
-## 🛠 Tech Stack
+## Tech Stack
 
 -   **Framework**: React Native (Expo SDK 50)
 -   **Language**: TypeScript
@@ -26,7 +24,7 @@ Welcome to **SeaFeeder CMU**, a final year project developed by Mechatronics Eng
 -   **UI Library**: React Native Paper + Custom Tailwind-styled components
 -   **3D Elements**: React Three Fiber (for 3D cage visualization)
 
-## 📱 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -58,7 +56,7 @@ Welcome to **SeaFeeder CMU**, a final year project developed by Mechatronics Eng
     -   Scan the QR code printed in the terminal using the **Expo Go** app.
     -   Ensure your phone and computer are on the same Wi-Fi network (or use a tunnel).
 
-## 📂 Project Structure
+## Project Structure
 
 -   `src/screens`: Main UI screens (Dashboard, Device Manager, Setup Wizard).
 -   `src/services`: Core logic (Database, Bluetooth, Feeding Calculator).
@@ -66,7 +64,7 @@ Welcome to **SeaFeeder CMU**, a final year project developed by Mechatronics Eng
 -   `src/assets`: Images and static JSON data (Species Research Tables).
 -   `src/navigation`: App routing configuration.
 
-## 👥 Development Team
+## Development Team
 
 **Developed by CMU Final Year Engineering Students**
 
