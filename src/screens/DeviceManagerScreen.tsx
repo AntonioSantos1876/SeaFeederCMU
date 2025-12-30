@@ -6,12 +6,27 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Devices, Device } from '../services/DatabaseService';
 import { ConnectivityManager } from '../services/ConnectivityManager';
 
+/**
+ * Device Manager Screen (Home)
+ * 
+ * The entry point of the application. Lists all paired feeders and provides
+ * status indicators (Online/Offline) for each.
+ * 
+ * Features:
+ * - Auto-refresh on focus to show latest connection status.
+ * - Add Device FAB to start the pairing wizard.
+ * - Pull-to-refresh support.
+ */
 export const DeviceManagerScreen = () => {
   const navigation = useNavigation<any>();
   const theme = useTheme();
   const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState(false);
 
+  /**
+   * Loads the list of devices from the local SQLite database.
+   * Sets loading state to true while fetching to show a spinner or refresh control.
+   */
   const loadDevices = async () => {
     setLoading(true);
     const list = await Devices.getAll();

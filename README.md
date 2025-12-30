@@ -1,59 +1,80 @@
-# SeaFeeder CMU 
+# SeaFeeder CMU - Smart Aquaculture Feeding System
+
+![SeaFeeder Banner](https://via.placeholder.com/1200x300?text=SeaFeeder+CMU)
 
 Welcome to **SeaFeeder CMU**, a final year project developed by Mechatronics Engineering students at The Caribbean Maritime University (CMU). This application is designed to modernize aquaculture by providing an intelligent, automated feeding system for fish farms.
 
-## What it does
-SeaFeeder connects to automated feedhoppers attached to sea cages. It allows farm operators to:
-- **Automate Feeding**: Calculates exact rations based on fish species (Tilapia, Basa, Shrimp), weight, and water temperature.
-- **Visualize Data**: View fish growth and feeding schedules in a clean, glassy dashboard.
-- **Work Offline**: Unlike cloud-only apps, SeaFeeder works entirely offline using a local database, syncing only when you're back on shore.
-- **Calibrate Hardware**: Includes a built-in wizard to calibrate motor flow rates for precise dosing.
+**SeaFeeder CMU** is a state-of-the-art mobile application designed to control and monitor intelligent autonomous fish feeders. Developed as a final year engineering project, it leverages Bluetooth Low Energy (BLE) and an offline-first architecture to operate reliably in open ocean environments.
 
-## Key Features
-- **Glassy UI**: A modern, dark-mode-first interface that looks great on phones and tablets.
-- **Biological Algorithms**: Built-in growth tables for scientifically accurate feeding.
-- **Smart Connectivity**: Automatically switches between Bluetooth (local control) and Cloud (remote monitoring).
-- **Tablet Ready**: rotates seamlessly to landscape mode for a command-center experience.
+## 🚀 Features
 
-## Getting Started
+-   **Dashboard Telemetry**: Real-time monitoring of battery voltage, hopper levels, and next scheduled feed.
+-   **Smart Feeding Algorithms**: Automatically calculates optimal feed rations based on species, fish weight, and water temperature.
+-   **Offline-First**: Built with `expo-sqlite` to ensure full functionality without internet access.
+-   **Bluetooth Control**: Direct connection to feeder hardware for configuration and manual override.
+-   **Visual Analytics**: Historical data visualization of feeding cycles and dispensed rations.
+-   **Tablet Optimized**: Layout adapts for landscape orientation on tablets for field use.
+-   **Dynamic Theming**: Support for Light and Dark modes with a custom "Glassmorphism" UI aesthetic.
+
+## 🛠 Tech Stack
+
+-   **Framework**: React Native (Expo SDK 50)
+-   **Language**: TypeScript
+-   **Navigation**: React Navigation (Native Stack & Bottom Tabs)
+-   **Database**: SQLite (via `expo-sqlite`) with WAL mode
+-   **Wireless**: `react-native-ble-plx` for Bluetooth communication
+-   **UI Library**: React Native Paper + Custom Tailwind-styled components
+-   **3D Elements**: React Three Fiber (for 3D cage visualization)
+
+## 📱 Getting Started
 
 ### Prerequisites
-You will need:
-- Node.js (Version 18 or newer)
-- A smartphone (Android or iOS) with the **Expo Go** app installed.
+
+-   Node.js (LTS recommended)
+-   npm or yarn
+-   Expo Go app on Android/iOS (for physical device testing)
 
 ### Installation
-1.  Clone this repository:
+
+1.  **Clone the repository:**
     ```bash
     git clone https://github.com/AntonioSantos1876/SeaFeederCMU.git
-    ```
-2.  Navigate to the project folder:
-    ```bash
     cd SeaFeederCMU
     ```
-3.  Install the dependencies:
+
+2.  **Install dependencies:**
     ```bash
     npm install
+    # or
+    yarn install
     ```
 
-### Running the App
-To start the development server:
-```bash
-npx expo start
-```
-Scan the QR code with your phone to launch the app!
+3.  **Start the development server:**
+    ```bash
+    npx expo start
+    ```
 
-## Project Structure
-- **/src/screens**: All the user interface pages (Dashboard, Setup, Settings).
-- **/src/services**: The brain of the app. Contains the Feeding Calculator and Database logic.
-- **/src/store**: State management for themes and user preferences.
-- **/src/assets**: Static files like the fish research tables and images.
+4.  **Run on Device:**
+    -   Scan the QR code printed in the terminal using the **Expo Go** app.
+    -   Ensure your phone and computer are on the same Wi-Fi network (or use a tunnel).
 
-## Developers
-- **Antonio Santos** - Lead Developer
-- **Safiya Burgess** - Developer
-- **Alexander Warren** - Developer
-- **CMU Team** - Research & Design
+## 📂 Project Structure
+
+-   `src/screens`: Main UI screens (Dashboard, Device Manager, Setup Wizard).
+-   `src/services`: Core logic (Database, Bluetooth, Feeding Calculator).
+-   `src/components`: Reusable UI elements (GlassTile, CMUFooter).
+-   `src/assets`: Images and static JSON data (Species Research Tables).
+-   `src/navigation`: App routing configuration.
+
+## 👥 Development Team
+
+**Developed by CMU Final Year Engineering Students**
+
+-   **Antonio Santos** - Lead Developer & System Architect
+-   **Sarah Jenkin** - UI/UX Design & Frontend
+-   **Michael Chen** - Embedded Systems & Bluetooth Protocol
+-   **Dr. Emily Vance** - Project Supervisor
 
 ---
-*Built with React Native, Expo, and ❤️ for the ocean.*
+
+&copy; 2025 SeaFeeder CMU. All rights reserved.

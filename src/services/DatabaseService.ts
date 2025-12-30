@@ -7,6 +7,12 @@ const db = SQLite.openDatabaseSync('seafeeder.db');
  * 
  * Uses SQLite (via expo-sqlite) to persist all Cage, Schedule, and Log data locally.
  * This ensures the app works 100% offline on the open sea.
+ * 
+ * Schema:
+ * - devices: Stores feeder configuration and state.
+ * - feeding_schedules: Stores calculation results.
+ * - logs: Stores history of feeds and alerts.
+ * - pending_commands: Queue for Bluetooth commands when connection is established.
  */
 export const initDatabase = async () => {
   try {
@@ -78,9 +84,19 @@ export const getDB = () => db;
 import { Device } from '../types/DeviceContract';
 
 export const Devices = {
+  /**
+   * Retrieves all registered devices from the local database.
+   * @returns Promise<Device[]> - List of all devices.
+   */
   getAll: async (): Promise<Device[]> => {
     return await db.getAllAsync<Device>('SELECT * FROM devices');
   },
+  /**
+   * Adds or updates a device in the database.
+   * Uses INSERT OR REPLACE to handle updates seamlessly.
+   * 
+   * @param device - The device object to save.
+   */
   add: async (device: Device) => {
     return await db.runAsync(
       `INSERT OR REPLACE INTO devices (id, name, cage_diameter, cage_depth, species, fish_count, fish_age, last_seen, connection_status, stocking_date, cage_dimensions, battery_voltage) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,

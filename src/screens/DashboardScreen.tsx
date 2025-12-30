@@ -12,8 +12,14 @@ import { CMUFooter } from '../components/CMUFooter';
 /**
  * Main Dashboard Screen
  * 
- * Displays real-time telemetry from the connected feeder.
- * Uses a Grid layout with GlassTiles to show Battery, Hopper Level, and Next Feed.
+ * Displays real-time telemetry from the connected feeder to give the user an immediate
+ * overview of the system status.
+ * 
+ * Key Features:
+ * - GlassTiles: Custom UI components for a modern, aquatic aesthetic.
+ * - Real-time Status: Shows next scheduled feed and battery voltage.
+ * - Schedule Preview: Horizontal scroll of upcoming feeds.
+ * - Manual Control: Direct access to Feed Now/Stop commands.
  */
 export const DashboardScreen = () => {
   const { params } = useRoute<any>();
@@ -29,6 +35,10 @@ export const DashboardScreen = () => {
     });
   }, [params?.deviceId]);
 
+  /**
+   * Reusable Glassmorphism Tile Component
+   * Applies a blur effect and semi-transparent background.
+   */
   const GlassTile = ({ children, style, height = 120 }: any) => (
     <View style={[styles.tileContainer, style, { height, borderColor: theme.colors.border }]}>
        <BlurView intensity={theme.glass.intensity} tint={theme.glass.tint as any} style={StyleSheet.absoluteFill} />

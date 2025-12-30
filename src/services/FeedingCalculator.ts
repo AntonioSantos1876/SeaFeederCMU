@@ -23,11 +23,20 @@ export interface CalculationInput {
 /**
  * Core Feeding Calculation Logic
  * 
- * Determines optimal feeding schedule based on biological species data.
- * Implements safeguards for overfeeding and temperature stress.
+ * Determines optimal feeding schedule based on biological species data from ResearchTables.
+ * Implements safeguards for overfeeding and temperature stress to ensure fish health.
+ * 
+ * Algorithm:
+ * 1. Look up species data.
+ * 2. Determine life stage based on average weight.
+ * 3. Calculate daily ration as percentage of biomass.
+ * 4. Apply environmental modifiers (Temperature < 22°C or > 32°C).
+ * 5. Reduce frequency if battery is low (< 11.5V).
+ * 6. Generate schedule based on safe feeding times.
  * 
  * @param input - The biological and environmental parameters (Species, Count, Weight, Temp).
  * @returns FeedingPlan - Complete schedule with daily totals and warnings.
+ * @throws Error if species is not found in ResearchTables.
  */
 export const calculateFeedingPlan = (input: CalculationInput): FeedingPlan => {
   const { species, fishCount, avgWeightG, temperatureC, customRatePct } = input;
@@ -100,6 +109,13 @@ export const calculateFeedingPlan = (input: CalculationInput): FeedingPlan => {
   };
 };
 
+/**
+ * Calculates the duration the motor needs to run to dispense a specific amount of feed.
+ * 
+ * @param gramsTarget - The amount of feed to dispense in grams.
+ * @param flowRateGps - The calibrated flow rate of the feeder in grams per second.
+ * @returns number - Duration in seconds. Returns 0 if flow rate is invalid.
+ */
 export const calculateMotorDuration = (gramsTarget: number, flowRateGps: number): number => {
   if (flowRateGps <= 0) return 0;
   return gramsTarget / flowRateGps;
